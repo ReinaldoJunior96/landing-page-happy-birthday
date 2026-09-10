@@ -1,0 +1,412 @@
+/* =========================================================================
+   CENTRAL DE PRESENTES DA LANA — camada de movimento
+   Regra da casa: só animar transform e opacity. Nada de animar
+   width/height/top/left, que forçam recálculo de layout a cada quadro.
+   ========================================================================= */
+
+/* ---------- 1. CARIMBO QUE BATE ------------------------------------------
+   A assinatura do conceito: o selo cai de cima, amassa no papel e assenta.
+   ------------------------------------------------------------------------- */
+.carimbo {
+  --giro: -7deg;
+  transform: rotate(var(--giro));
+  position: relative;
+}
+@media (max-width: 700px) { .carimbo { --giro: -4deg; } }
+
+.carimbo--bate {
+  opacity: 0;
+  animation: carimba 620ms cubic-bezier(.2, .9, .3, 1) both;
+  animation-delay: var(--atraso, 0ms);
+  animation-play-state: paused;
+}
+.is-visivel .carimbo--bate,
+.carimbo--bate.is-visivel { animation-play-state: running; }
+
+@keyframes carimba {
+  0%   { transform: rotate(calc(var(--giro) - 16deg)) scale(2.5); opacity: 0; }
+  55%  { transform: rotate(var(--giro)) scale(.92);               opacity: 1; }
+  72%  { transform: rotate(var(--giro)) scale(1.06); }
+  86%  { transform: rotate(var(--giro)) scale(.98); }
+  100% { transform: rotate(var(--giro)) scale(1);                 opacity: .92; }
+}
+
+/* Onda de impacto do carimbo */
+.carimbo--bate::after {
+  content: '';
+  position: absolute;
+  inset: -6px;
+  border: 2px solid currentColor;
+  border-radius: 8px;
+  opacity: 0;
+  animation: impacto 620ms ease-out both;
+  animation-delay: calc(var(--atraso, 0ms) + 300ms);
+  animation-play-state: inherit;
+  pointer-events: none;
+}
+@keyframes impacto {
+  0%   { transform: scale(.9);  opacity: .65; }
+  100% { transform: scale(1.5); opacity: 0; }
+}
+
+/* ---------- 2. SUBLINHADO QUE SE DESENHA --------------------------------- */
+.sublinha {
+  background-size: 0% var(--sublinha-altura);
+  transition: background-size .78s var(--ease) calc(var(--atraso, 0ms) + 260ms);
+}
+.is-visivel .sublinha { background-size: 100% var(--sublinha-altura); }
+
+/* ---------- 3. PALAVRAS: folga para não cortar acento e descida ---------- */
+.palavra {
+  padding-bottom: .1em;
+  margin-bottom: -.1em;
+  padding-top: .04em;
+  margin-top: -.04em;
+}
+
+/* ---------- 4. CAPA: parallax de camadas --------------------------------
+   O azulejo do fundo anda mais devagar que o conteúdo, e o miolo sobe e
+   desbota conforme a capa sai de cena. Valores vêm do scroll, em JS.
+   ------------------------------------------------------------------------- */
+.capa .azulejo {
+  transform: translate3d(0, var(--parallax-fundo, 0px), 0);
+  will-change: transform;
+}
+.capa__miolo {
+  transform: translate3d(0, var(--parallax-miolo, 0px), 0);
+  opacity: var(--capa-opacidade, 1);
+  will-change: transform, opacity;
+}
+.capa .faixa {
+  transform: translate3d(var(--faixa-desliza, 0px), 0, 0);
+}
+
+/* A seta do botão da capa convida a rolar sem ocupar espaço próprio */
+.seta-anda {
+  display: inline-block;
+  animation: cutuca 1.8s var(--ease-inout) infinite;
+}
+@keyframes cutuca {
+  0%, 100% { transform: translateX(0); }
+  50%      { transform: translateX(5px); }
+}
+
+/* Objeto pendurado balança no fio, cada um no seu tempo */
+.pendurado {
+  animation: balanco 3.6s var(--ease-inout) infinite alternate;
+  animation-delay: var(--atraso, 0ms);
+}
+@keyframes balanco {
+  from { transform: rotate(-5deg); }
+  to   { transform: rotate(5deg); }
+}
+
+/* Estrela recortada pulsa de leve, como brilho de espelhinho */
+.estrela { animation: cintila 2.8s var(--ease-inout) infinite alternate; }
+@keyframes cintila {
+  from { transform: rotate(var(--giro-estrela, 0deg)) scale(.88); opacity: .75; }
+  to   { transform: rotate(var(--giro-estrela, 0deg)) scale(1.06); opacity: 1; }
+}
+
+/* O círculo de caneta se desenha quando entra na tela */
+.circulado__traco path {
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+  transition: stroke-dashoffset 1.15s var(--ease-inout) var(--atraso, 0ms);
+}
+.is-visivel .circulado__traco path { stroke-dashoffset: 0; }
+
+/* ---------- 5. MENU: cartão que se levanta da pilha ----------------------
+   O reveal vive no invólucro; o hover vive no cartão. Sem os dois brigando
+   pela mesma propriedade transform.
+   ------------------------------------------------------------------------- */
+.menu-grade > .opcao-caixa { display: grid; }
+
+.opcao {
+  transform:
+    translate3d(var(--tx, 0), var(--ty, 0), 0)
+    rotate(var(--giro-card, 0deg));
+  transition:
+    transform .32s var(--ease),
+    box-shadow .32s var(--ease),
+    background .32s var(--ease);
+}
+.opcao:hover, .opcao:focus-visible { --tx: -3px; --ty: -6px; --giro-card: -1.1deg; }
+.opcao:active { --tx: 1px; --ty: 2px; --giro-card: 0deg; }
+
+.opcao__emoji, .opcao__recorte {
+  transition: transform .42s cubic-bezier(.34, 1.56, .64, 1);
+  transform-origin: bottom center;
+}
+.opcao:hover .opcao__emoji,
+.opcao:focus-visible .opcao__emoji,
+.opcao:hover .opcao__recorte,
+.opcao:focus-visible .opcao__recorte { transform: translateY(-5px) rotate(-8deg) scale(1.12); }
+
+.opcao__num { transition: letter-spacing .32s var(--ease), opacity .32s var(--ease); }
+.opcao:hover .opcao__num { letter-spacing: .3em; opacity: .9; }
+
+/* ---------- 6. TEMPO DE PIADA -------------------------------------------
+   Piada precisa de pausa. Estas classes atrasam a entrada da punchline.
+   ------------------------------------------------------------------------- */
+.punchline { transition-delay: var(--atraso, 620ms) !important; }
+
+/* O "Não." da seção do cabelo entra com peso */
+.resposta-seca {
+  display: inline-block;
+  animation: bate-forte 520ms cubic-bezier(.2, .9, .3, 1) both;
+  animation-delay: var(--atraso, 700ms);
+  animation-play-state: paused;
+}
+.is-visivel .resposta-seca { animation-play-state: running; }
+@keyframes bate-forte {
+  0%   { transform: scale(2.1) rotate(-4deg); opacity: 0; }
+  60%  { transform: scale(.94); opacity: 1; }
+  100% { transform: scale(1) rotate(0); opacity: 1; }
+}
+
+/* ---------- 7. UNHAS: antes treme, depois reluz -------------------------- */
+.estado { position: relative; overflow: hidden; }
+
+.is-visivel .estado--atual {
+  animation: treme 520ms ease-in-out 520ms 2;
+}
+@keyframes treme {
+  0%, 100% { transform: translateX(0); }
+  25%      { transform: translateX(-3px) rotate(-.4deg); }
+  75%      { transform: translateX(3px) rotate(.4deg); }
+}
+
+.estado--desejado::after {
+  content: '';
+  position: absolute;
+  top: -60%; bottom: -60%;
+  width: 55%;
+  left: -70%;
+  background: linear-gradient(100deg, transparent, rgba(255, 255, 255, .75), transparent);
+  transform: rotate(14deg);
+  pointer-events: none;
+}
+.is-visivel .estado--desejado::after {
+  animation: reluz 4.6s var(--ease-inout) 900ms infinite;
+}
+@keyframes reluz {
+  0%       { left: -70%; }
+  26%, 100%{ left: 150%; }
+}
+
+/* ---------- 8. PRÉDIO: as janelas acendem depois que o andar assenta ----- */
+.is-visivel .predio__andar::before,
+.is-visivel .predio__andar::after {
+  animation: acende 1.5s steps(1, end) both;
+  animation-delay: calc(var(--atraso, 0ms) + 420ms);
+}
+.is-visivel .predio__andar::after { animation-delay: calc(var(--atraso, 0ms) + 620ms); }
+
+@keyframes acende {
+  0%,  14% { opacity: .16; }
+  16%, 22% { opacity: .95; }
+  24%, 33% { opacity: .2; }
+  35%, 41% { opacity: .9; }
+  43%, 49% { opacity: .28; }
+  51%,100% { opacity: .95; }
+}
+
+/* O telhado chega com impacto e assenta */
+.is-visivel .predio__telhado { animation: assenta 700ms cubic-bezier(.2, .9, .3, 1) 900ms both; }
+@keyframes assenta {
+  0%   { transform: translateY(-46px); opacity: 0; }
+  62%  { transform: translateY(0); opacity: 1; }
+  78%  { transform: translateY(-7px); }
+  100% { transform: translateY(0); }
+}
+
+/* Poeirinha de obra quando o telhado bate */
+.predio__poeira {
+  display: block;
+  height: 0;
+  text-align: center;
+  font-family: var(--f-mono);
+  font-size: var(--t-xs);
+  letter-spacing: .3em;
+  color: var(--manteiga);
+  opacity: 0;
+}
+.is-visivel .predio__poeira { animation: poeira 900ms ease-out 1500ms both; }
+@keyframes poeira {
+  0%   { opacity: 0; transform: translateY(0) scale(.7); }
+  35%  { opacity: .8; }
+  100% { opacity: 0; transform: translateY(-24px) scale(1.5); }
+}
+
+/* ---------- 9. CARRO: inclina, deixa rastro e marca o km ----------------- */
+.estrada__carro {
+  /* O recorte do carro aponta para a esquerda,
+     então espelhamos para ele andar no sentido em que se lê. */
+  transform:
+    translateX(calc(var(--avanco, 0) * (100cqw - var(--carro-largura))))
+    rotate(var(--inclina, 0deg))
+    scaleX(-1);
+  transition: none;
+}
+
+.estrada__rastro {
+  position: absolute;
+  bottom: 34%;
+  left: 0;
+  /* scaleX em vez de width: transform não dispara recálculo de layout */
+  width: 100%;
+  transform: scaleX(var(--avanco, 0));
+  transform-origin: left center;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, rgba(243, 208, 122, .55));
+  border-radius: 2px;
+  pointer-events: none;
+}
+
+.estrada__risco {
+  position: absolute;
+  height: 2px;
+  border-radius: 2px;
+  background: rgba(247, 241, 227, .35);
+  animation: risca 620ms linear infinite;
+  opacity: var(--forca-risco, 0);
+  transition: opacity .4s var(--ease);
+}
+@keyframes risca {
+  from { transform: translateX(0);     opacity: .5; }
+  to   { transform: translateX(-64px); opacity: 0; }
+}
+
+.estrada__placa {
+  transition: border-color .3s var(--ease), color .3s var(--ease);
+}
+.estrada__placa b { font-variant-numeric: tabular-nums; }
+
+/* ---------- 10. ONDA DO CALÇADÃO EM MOVIMENTO ---------------------------- */
+.onda {
+  --onda-largura: clamp(150px, 20vw, 260px);
+  background-size: var(--onda-largura) 100%;
+  animation: maresia 26s linear infinite;
+}
+@keyframes maresia {
+  from { background-position-x: 0; }
+  to   { background-position-x: var(--onda-largura); }
+}
+
+/* ---------- 11. VALORES: número que sobe ao ser escolhido ---------------- */
+.tier__valor, .modal__valor { font-variant-numeric: tabular-nums; }
+
+.tier[aria-pressed='true'] .tier__valor { animation: pulinho 380ms cubic-bezier(.34, 1.56, .64, 1); }
+@keyframes pulinho {
+  0%   { transform: scale(1); }
+  45%  { transform: scale(1.16); }
+  100% { transform: scale(1); }
+}
+
+.chip[aria-pressed='true'] { animation: pulinho 380ms cubic-bezier(.34, 1.56, .64, 1); }
+
+/* QR que vira ao trocar de valor */
+.qr-moldura.trocando { animation: vira 520ms var(--ease-inout); }
+@keyframes vira {
+  0%   { transform: rotateY(0);     }
+  50%  { transform: rotateY(88deg); }
+  100% { transform: rotateY(0);     }
+}
+
+/* ---------- 12. CONTADOR DE SEÇÃO NO BOTÃO FLUTUANTE -------------------- */
+.voltar-menu__contador {
+  font-variant-numeric: tabular-nums;
+  padding-left: 9px;
+  margin-left: 3px;
+  border-left: 1.5px solid rgba(34, 32, 29, .3);
+  opacity: .72;
+}
+
+/* ---------- 13. CONFETE DE FESTA (final) --------------------------------
+   Estrelinhas e discos caindo — linguagem de festa/discoteca, não de varal.
+   ------------------------------------------------------------------------- */
+.confete {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 1;
+}
+.confete i {
+  position: absolute;
+  top: -8%;
+  width: 14px;
+  height: 14px;
+  animation: cai var(--tempo, 5s) linear var(--espera, 0s) forwards;
+  will-change: transform;
+}
+.confete i.e {
+  clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%,
+                     50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+}
+.confete i.d { border-radius: 50%; }
+.confete i.r { width: 6px; height: 16px; border-radius: 3px; }
+
+@keyframes cai {
+  0%   { transform: translateY(0) rotate(0deg);      opacity: 0; }
+  8%   { opacity: 1; }
+  85%  { opacity: 1; }
+  100% { transform: translateY(105vh) rotate(var(--rodopio, 540deg)); opacity: 0; }
+}
+
+/* ---------- 14. MODAL: conteúdo entra em cascata ------------------------ */
+.modal.aberto .modal__caixa > * {
+  animation: sobe-modal 460ms var(--ease) both;
+}
+.modal.aberto .modal__caixa > *:nth-child(1) { animation-delay: 60ms; }
+.modal.aberto .modal__caixa > *:nth-child(2) { animation-delay: 110ms; }
+.modal.aberto .modal__caixa > *:nth-child(3) { animation-delay: 150ms; }
+.modal.aberto .modal__caixa > *:nth-child(4) { animation-delay: 190ms; }
+.modal.aberto .modal__caixa > *:nth-child(5) { animation-delay: 225ms; }
+.modal.aberto .modal__caixa > *:nth-child(6) { animation-delay: 255ms; }
+.modal.aberto .modal__caixa > *:nth-child(n+7) { animation-delay: 285ms; }
+@keyframes sobe-modal {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* ---------- 15. BOTÃO PRINCIPAL: brilho que atravessa -------------------- */
+.btn { position: relative; overflow: hidden; }
+.btn::after {
+  content: '';
+  position: absolute;
+  top: -50%; bottom: -50%;
+  left: -80%;
+  width: 45%;
+  background: linear-gradient(100deg, transparent, rgba(255, 255, 255, .28), transparent);
+  transform: rotate(16deg);
+  transition: left .6s var(--ease);
+  pointer-events: none;
+}
+.btn:hover::after { left: 130%; }
+
+/* ---------- 16. MOVIMENTO REDUZIDO -------------------------------------
+   Quem pediu menos movimento no sistema recebe a página inteira parada,
+   inclusive os efeitos ligados ao scroll (o JS nem chega a registrá-los).
+   ------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  .carimbo--bate,
+  .carimbo--bate::after,
+  .resposta-seca,
+  .estado--desejado::after,
+  .predio__poeira,
+  .confete,
+  .seta-anda,
+  .onda {
+    animation: none !important;
+  }
+  .carimbo--bate, .resposta-seca { opacity: 1 !important; transform: rotate(var(--giro)) !important; }
+  .resposta-seca { transform: none !important; }
+  .sublinha { background-size: 100% var(--sublinha-altura) !important; transition: none !important; }
+  .capa .azulejo { transform: none !important; }
+  .capa__miolo, .capa .faixa { transform: none !important; opacity: 1 !important; }
+  .seta-anda { animation: none !important; }
+  .estrada__carro { transform: translateX(0) scaleX(-1) !important; }
+  .btn::after { display: none; }
+}

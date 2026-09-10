@@ -1,0 +1,212 @@
+/* Convite recortado: papel claro, fotografias coloridas e letra à mão.
+   Mantém a estrutura, os carimbos e as interações do prospecto original. */
+.tema-musgo, .tema-grafite { background: var(--marfim); color: var(--grafite); }
+.azulejo, .onda { display: none; }
+.textura-papel::before { opacity: .16; }
+.secao { border-top: 1px solid rgba(34, 32, 29, .12); }
+.destaque { color: var(--cereja); }
+.carimbo { color: var(--cereja); }
+.protocolo { font-size: .65rem; letter-spacing: .13em; }
+.olho { font-family: var(--f-display); font-size: clamp(1.2rem, 1.1rem + .4vw, 1.5rem); line-height: 1.4; opacity: 1; max-width: 46ch; }
+.titulo-secao, .titulo-mega { font-family: var(--f-serif); font-weight: 700; text-transform: none; letter-spacing: -.025em; line-height: 1.05; }
+.titulo-secao { font-size: clamp(2.8rem, 2rem + 3vw, 4.8rem); }
+.titulo-mega { font-size: clamp(3.3rem, 2.3rem + 4vw, 6.4rem); }
+.nome-lana { font-style: normal; }
+/* Folga lateral para os traços cursivos não serem cortados pela revelação. */
+.titulo-secao .palavra, .titulo-mega .palavra, .capa__titulo .palavra { padding-inline: .06em; margin-inline: -.06em; padding-block: .12em; margin-block: -.12em; }
+
+.capa { background: var(--marfim); color: var(--grafite); }
+.capa .faixa { height: clamp(184px, 21vw, 248px); }
+.faixa::before, .faixa::after { background: var(--grafite); }
+.pendurado { width: clamp(76px, 10vw, 112px); }
+.pendurado--menor { width: clamp(60px, 8vw, 90px); }
+.capa .pendurado--globo { left: -28px; top: 42px; width: clamp(150px, 18vw, 218px); }
+.capa .pendurado--baloes { left: auto; right: clamp(12px, 6vw, 92px); top: 36px; width: clamp(92px, 12vw, 146px); }
+.capa .colagem-estrelas { --cor: var(--cereja); }
+.capa .estrela { --cor: var(--cereja); }
+.capa__miolo { text-align: center; justify-items: center; max-width: 920px; gap: 20px; padding-top: 0; padding-bottom: 44px; }
+.capa__alerta { justify-self: center; font-size: .65rem; letter-spacing: .15em; background: transparent; border-bottom: 1px solid currentColor; border-radius: 0; padding: 0 0 8px; animation: none; }
+.capa__titulo { font-family: var(--f-serif); font-size: clamp(3.3rem, 2rem + 5vw, 6.2rem); line-height: .98; text-transform: none; font-weight: 700; letter-spacing: -.03em; }
+.capa__titulo .nome-lana { color: var(--cereja); font-size: 1.7em; font-weight: 700; line-height: .85; margin-bottom: .12em; }
+.capa__chamada { display: block; }
+.capa__texto { max-width: 35ch; font-size: clamp(1.25rem, 1.1rem + .5vw, 1.6rem); font-weight: 400; line-height: 1.35; }
+.capa__texto span + span { margin-top: .45em; }
+.capa__assinatura { justify-content: center; max-width: 660px; border-top-color: rgba(34, 32, 29, .22); gap: 20px 26px; }
+.capa__assinatura .btn { flex-basis: 100%; width: auto; max-width: 300px; }
+.capa__selo { font-size: .58rem; letter-spacing: .08em; text-align: left; }
+.capa__assinatura .carimbo { font-size: 1rem; }
+.ticker { background: var(--grafite); color: var(--marfim); }
+.ticker__trilha { font-size: .65rem; }
+
+.menu-grade { gap: 18px; }
+.opcao { border-width: 1px; border-radius: 3px; box-shadow: 3px 4px 0 rgba(34,32,29,.1); min-height: 190px; }
+.opcao::after { opacity: .25; }
+.opcao__nome { font-weight: 600; font-size: 1.55rem; line-height: 1.05; letter-spacing: 0; }
+.opcao__num, .opcao__seta { font-size: .62rem; letter-spacing: .08em; }
+.opcao__recorte { width: 88px; height: 92px; right: 16px; top: 10px; }
+.opcao__recorte--carro { width: 128px; }
+.opcao:has(.opcao__recorte) .opcao__num { margin-bottom: 64px; }
+.recorte--titulo { height: 1.25em; max-width: 1.4em; }
+
+/* Uma linha por mimo. O preço conduz, a piada acompanha. */
+.valores { border: 1px solid rgba(34,32,29,.35); border-radius: 3px; box-shadow: 4px 5px 0 rgba(34,32,29,.07); padding: clamp(18px, 3vw, 26px); }
+.valores__topo { font-size: .61rem; letter-spacing: .06em; border-bottom-width: 1px; padding-bottom: 12px; margin-bottom: 4px; }
+.valores__lista { gap: 0; }
+.tier { grid-template-columns: 76px minmax(0,1fr) 16px; gap: 12px; min-height: 62px; border: 0; border-bottom: 1px solid rgba(34,32,29,.16); border-radius: 0; padding: 12px 8px; }
+.tier__valor { grid-column: 1; grid-row: 1; font-family: var(--f-display); font-size: 1.55rem; font-weight: 600; letter-spacing: -.03em; }
+.tier__nota { grid-column: 2; grid-row: 1; font-size: 1.12rem; opacity: .85; }
+.tier__marca { grid-column: 3; grid-row: 1; width: 16px; height: 16px; border-width: 1px; }
+.tier__marca::after { inset: 3px; }
+.tier:hover, .tier[aria-pressed='true'] { transform: none; background: rgba(243,208,122,.27); border-color: rgba(34,32,29,.3); }
+.tier[aria-pressed='true'] .tier__valor { color: var(--cereja); }
+.valores__rodape { font-family: var(--f-display); font-size: 1rem; letter-spacing: .01em; opacity: .72; }
+.btn { font-family: var(--f-display); font-size: 1.15rem; font-weight: 600; letter-spacing: .04em; box-shadow: 2px 3px 0 rgba(34,32,29,.18); }
+.btn--manteiga { background: var(--grafite); color: var(--marfim); }
+.btn--manteiga:hover { background: var(--cereja); color: var(--marfim); }
+.btn:hover { background: var(--cereja); }
+.btn--fantasma:hover { background: var(--marfim-2); color: var(--grafite); }
+
+.manifesto { font-family: var(--f-serif); font-weight: 700; text-transform: none; font-size: clamp(2.3rem, 1.8rem + 2.6vw, 4.2rem); }
+.manifesto .punchline { color: var(--cereja); }
+#unhas .nome-lana { color: var(--cereja) !important; }
+.estado__valor { font-family: var(--f-serif); font-weight: 700; }
+.predio__andar { border-color: var(--grafite); background: rgba(34,32,29,.04); }
+.predio__andar::before, .predio__andar::after { background: var(--cereja); }
+.predio__telhado { border-bottom-color: var(--grafite); }
+.estrada { height: clamp(150px, 18vw, 188px); }
+.estrada__carro { --carro-largura: clamp(126px, 16vw, 176px); bottom: 27%; }
+.estrada__placa { font-size: .6rem; }
+.pix-cartao { border-width: 1px; border-radius: 3px; box-shadow: 4px 5px 0 rgba(34,32,29,.1); }
+.pix-recebedora { font-size: 1rem; margin-bottom: 20px; }
+.chip { font-family: var(--f-display); font-size: 1.15rem; min-height: 44px; }
+.qr-moldura { background: #fff; }
+.final__recorte { width: clamp(180px, 23vw, 244px); margin-bottom: 20px; }
+.final__nota { font-size: clamp(1.45rem, 1.2rem + 1vw, 2rem); color: var(--cereja); opacity: 1; font-style: normal; }
+.circulado__traco { stroke: var(--cereja); }
+.faixa--rodape { height: clamp(190px, 20vw, 230px); }
+.final .creditos { font-size: .6rem; }
+.modal { background: rgba(34,32,29,.65); }
+.modal__caixa { border-radius: 8px; }
+.modal__valor { font-family: var(--f-serif); font-size: 3.5rem; }
+
+@media (max-width: 700px) {
+  .capa__miolo { gap: 18px; }
+  .capa .faixa { height: 196px; }
+  .capa .pendurado--globo { left: -42px; }
+  .capa .pendurado--baloes { right: 10px; }
+  .capa .colagem-estrelas .estrela:nth-child(1) { left: 24% !important; top: 12% !important; }
+  .capa .colagem-estrelas .estrela:nth-child(2) { left: 7% !important; top: 24% !important; }
+  .capa .colagem-estrelas .estrela:nth-child(3) { display: none; }
+  .capa__titulo .nome-lana { font-size: 1.65em; }
+  .capa__assinatura { gap: 20px; }
+  .capa__selo { max-width: 175px; }
+  .tier { grid-template-columns: 66px minmax(0,1fr) 16px; gap: 10px; }
+  .tier__nota { font-size: 1.05rem; }
+  .tier__valor { font-size: 1.4rem; }
+  .final__recorte { width: 190px; }
+}
+
+/* O tamanho mínimo do grid não pode ser imposto pelo payload Pix sem espaços. */
+.pix-cartao { grid-template-columns: minmax(0, 1fr); }
+.pix-cartao > * { min-width: 0; }
+.campo-valor input { font-family: var(--f-display); font-size: 1.25rem; }
+.circulado { --traco-cor: var(--cereja); }
+.titulo-secao .palavra, .titulo-mega .palavra, .capa__titulo .palavra { overflow: visible; }
+@media (min-width: 820px) {
+  .pix-cartao { grid-template-columns: 250px minmax(0, 1fr); }
+}
+
+/* Fotografias de infância: a moldura é papel; a fotografia mantém sua cor.
+   O giro fica na figura interna, separado do reveal aplicado ao contêiner. */
+.foto-memoria {
+  width: min(100%, 268px);
+  margin: 38px auto 10px;
+  min-width: 0;
+}
+.polaroid {
+  --giro-foto: -4deg;
+  --foco-foto: 50% 50%;
+  position: relative;
+  margin: 0;
+  padding: 12px 12px 7px;
+  background: #F7F1E3;
+  border: 1px solid rgba(34, 32, 29, .09);
+  box-shadow: 2px 3px 2px rgba(34, 32, 29, .10), 5px 12px 20px rgba(34, 32, 29, .15);
+  transform: rotate(var(--giro-foto));
+}
+.polaroid::before {
+  content: '';
+  position: absolute;
+  z-index: 1;
+  width: 76px;
+  height: 24px;
+  top: -12px;
+  left: calc(50% - 38px);
+  background: rgba(243, 208, 122, .46);
+  border-inline: 1px dashed rgba(34, 32, 29, .1);
+  transform: rotate(-7deg);
+  pointer-events: none;
+}
+.polaroid__foto {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1;
+  object-fit: cover;
+  object-position: var(--foco-foto);
+  background: var(--marfim-2);
+}
+.polaroid figcaption {
+  display: grid;
+  place-items: center;
+  min-height: 58px;
+  padding: 8px 2px 3px;
+  font-family: var(--f-serif);
+  font-size: 1.5rem;
+  font-weight: 600;
+  line-height: 1.05;
+  text-align: center;
+  color: var(--grafite);
+}
+.polaroid--foto1 { --giro-foto: 5deg; --foco-foto: 50% 55%; }
+.polaroid--foto2 { --giro-foto: -4deg; --foco-foto: 50% 35%; }
+.polaroid--foto3 { --giro-foto: 3deg; --foco-foto: 50% 70%; }
+.polaroid--foto3 .polaroid__foto { aspect-ratio: 4 / 5; }
+.polaroid--foto4 { --giro-foto: -5deg; --foco-foto: 50% 85%; }
+.foto-memoria--capa { width: min(76%, 258px); margin-top: 24px; margin-bottom: 18px; }
+.final__memorias {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, .7fr);
+  align-items: center;
+  gap: clamp(16px, 4vw, 40px);
+  max-width: 570px;
+  margin: 0 auto 42px;
+}
+.final__memorias .foto-memoria { width: 100%; margin: 0; }
+.final__memorias .final__recorte { width: 100%; max-width: 220px; margin: 0; }
+
+@media (min-width: 1000px) {
+  .capa__miolo {
+    max-width: 1120px;
+    grid-template-columns: minmax(0, 1fr) 280px;
+    column-gap: 60px;
+  }
+  .capa__miolo > :not(.foto-memoria--capa) { grid-column: 1; }
+  .capa__miolo > .foto-memoria--capa {
+    grid-column: 2;
+    grid-row: 1 / span 4;
+    align-self: center;
+    width: 100%;
+    margin: 0;
+  }
+  .foto-memoria--look, .foto-memoria--carro { margin-top: 42px; }
+}
+@media (max-width: 600px) {
+  .final__memorias { grid-template-columns: minmax(0, 1fr) minmax(0, .55fr); gap: 16px; }
+  .final__memorias .polaroid { padding: 8px 8px 5px; }
+  .final__memorias .polaroid figcaption { font-size: 1.3rem; min-height: 54px; }
+}
+
+/* Recorte do sonho imobiliário, preservado inteiro. */
+.apartamento__recorte { width: min(100%, 380px); margin: 34px auto 0; }
+.apartamento__recorte .recorte { display: block; width: 100%; height: auto; }
