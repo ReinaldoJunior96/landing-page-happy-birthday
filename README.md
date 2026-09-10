@@ -10,6 +10,8 @@ HTML · CSS · JavaScript
 
 </div>
 
+Projeto desenvolvido para um cliente e apresentado neste portfólio com sua autorização.
+
 ![Capa da landing page: nome Lanna em letra manuscrita, globo espelhado, balões e foto de infância em Polaroid.](docs/screenshots/capa-desktop.jpg)
 
 ## Um documento oficial vestido de festa
