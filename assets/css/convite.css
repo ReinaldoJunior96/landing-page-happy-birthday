@@ -210,3 +210,7 @@
 /* Recorte do sonho imobiliário, preservado inteiro. */
 .apartamento__recorte { width: min(100%, 380px); margin: 34px auto 0; }
 .apartamento__recorte .recorte { display: block; width: 100%; height: auto; }
+
+.foto-memoria--cabelo { width: min(100%, 310px); }
+.polaroid--foto5 { --giro-foto: -3deg; }
+.polaroid--foto5 .polaroid__foto { aspect-ratio: 1179 / 866; }

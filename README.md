@@ -34,7 +34,7 @@ O prédio rosa ocupa o lugar de destaque na seção do sonho imobiliário. Ao la
 
 ## Memórias que fazem parte da brincadeira
 
-As quatro fotos de infância aparecem ao longo da narrativa: na capa, no look, no carro e no encerramento. Moldura clara, sombra suave, leve inclinação e legenda manuscrita dão a aparência de Polaroids guardadas num álbum.
+As cinco fotos de infância aparecem ao longo da narrativa: na capa, no cabelo, no look, no carro e no encerramento. Moldura clara, sombra suave, leve inclinação e legenda manuscrita dão a aparência de Polaroids guardadas num álbum.
 
 A foto do triciclo acompanha o “fundo do carro inexistente”. No look, a legenda entrega: **“O look sempre foi assunto sério.”** As cores e a textura das fotografias originais foram preservadas.
 
